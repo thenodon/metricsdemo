@@ -21,16 +21,11 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 public class MBeanManager {
     
     private final static Logger LOGGER = LoggerFactory.getLogger(MBeanManager.class);
+    private static final String METRICS_DOMAIN = "metrics";
     private String objectName;
     private Object register;
     private MBeanServer mbs;
     ObjectName mbeanname;
-    
-    
-    
-    
-    ////////////////////////////
-    private static final String METRICS_DOMAIN = "metrics";
     
     private static final MetricRegistry metricsRegister = new MetricRegistry();
 	private static final JmxReporter reporter = JmxReporter.forRegistry(metricsRegister).inDomain(METRICS_DOMAIN).build();
@@ -41,10 +36,12 @@ public class MBeanManager {
     	reporter.start();
     }
     
+    
     public MBeanManager(Object register,String objectName) {
         this.objectName = objectName;
         this.register = register;
     }
+    
     
     public void registerMBeanserver() {
         
@@ -70,6 +67,7 @@ public class MBeanManager {
         }
     }
     
+    
     public void unRegisterMBeanserver() {
         try {
             mbs.unregisterMBean(mbeanname);
@@ -79,7 +77,8 @@ public class MBeanManager {
             LOGGER.warn("Mbean {} instance could not be found", mbeanname, e);
         }
     }        
-    /////////////////
+    
+
     public static MetricRegistry getRegister() {
     	return metricsRegister;
     }
