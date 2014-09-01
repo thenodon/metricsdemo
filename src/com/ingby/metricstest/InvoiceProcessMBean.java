@@ -9,4 +9,6 @@ public interface InvoiceProcessMBean {
 	long getInvoiceCount();
 	
 	boolean healthy();
+	
+	double getFailedRatio();
 }

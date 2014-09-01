@@ -15,7 +15,7 @@ public class InvoiceHealthCheck extends HealthCheck {
 
 	@Override
     public HealthCheck.Result check() throws Exception {
-        //Implement some cool checks
+        
 		SortedMap<String, Counter> counters = MBeanManager.getRegister().getCounters();
 		long failed = counters.get("com.ingby.metricstest.Invoice.failedInvoices").getCount();
 		
@@ -23,8 +23,8 @@ public class InvoiceHealthCheck extends HealthCheck {
 		long total = timers.get("com.ingby.metricstest.Invoice.responses time").getCount();
 		
 		double ratio = (double) failed / (double) total;
-		//LOGGER.info("=============================================> Ratio Failed {} Total {} {} > {}",failed, total, ratio, RATIO);
-		if (ratio < RATIO) {
+		//LOGGER.info("Ratio Failed {} Total {} {} > {}",failed, total, ratio, RATIO);
+		if (failed == 0 || ratio < RATIO) {
 			return HealthCheck.Result.healthy();
 		} else {
 			return HealthCheck.Result.unhealthy("More then " + Math.round(ratio*100) +" percentage failed invoices");
@@ -32,4 +32,5 @@ public class InvoiceHealthCheck extends HealthCheck {
 		
 		
     }
+	
 }

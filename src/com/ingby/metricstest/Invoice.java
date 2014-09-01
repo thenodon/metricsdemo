@@ -14,7 +14,7 @@ import com.codahale.metrics.Timer;
 /**
  * Invoice class to do invoice things
  */
-public class Invoice  {
+public class Invoice {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Invoice.class);
 	private static AtomicLong count = new AtomicLong(0);
@@ -39,6 +39,7 @@ public class Invoice  {
 			count.incrementAndGet();
 		}
 	}
+	
 	
 	/**
 	 * 
@@ -76,7 +77,7 @@ public class Invoice  {
 	
 	private void doValidate() {
 		try {
-			Thread.sleep((long) (Math.random()*1000));
+			Thread.sleep((long) (Math.random()*2000));
 		} catch (InterruptedException e) {}
 	}
 }

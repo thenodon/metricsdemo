@@ -24,13 +24,13 @@ public class MBeanManager {
     private static final String METRICS_DOMAIN = "metrics";
     private String objectName;
     private Object register;
-    private MBeanServer mbs;
+    private static MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     ObjectName mbeanname;
     
     private static final MetricRegistry metricsRegister = new MetricRegistry();
 	private static final JmxReporter reporter = JmxReporter.forRegistry(metricsRegister).inDomain(METRICS_DOMAIN).build();
     
-    private static final HealthCheckRegistry healthChecks = new HealthCheckRegistry();
+    private static final HealthCheckRegistry healthChecksRegister = new HealthCheckRegistry();
     
     static {
     	reporter.start();
@@ -42,10 +42,13 @@ public class MBeanManager {
         this.register = register;
     }
     
+    public MBeanServer getMBeanServer() {
+    	return mbs;
+    }
     
     public void registerMBeanserver() {
         
-        mbs = ManagementFactory.getPlatformMBeanServer();
+        //mbs = ManagementFactory.getPlatformMBeanServer();
         
         try {
             mbeanname = new ObjectName(objectName);
@@ -78,13 +81,14 @@ public class MBeanManager {
         }
     }        
     
-
+    
+    
     public static MetricRegistry getRegister() {
     	return metricsRegister;
     }
     
     public static HealthCheckRegistry getHealthCheckRegistry() {
-    	return healthChecks;
+    	return healthChecksRegister;
     }
 	
 }
